@@ -33,16 +33,31 @@ async function run() {
     await client.connect();
      
     const artscraftCollection=client.db('artsaDB').collection('arts');
+    const usersCollection=client.db('artsaDB').collection('users');
+
+
     app.get('/addcraft',async(req,res)=>{
       const cursor=artscraftCollection.find();
       const result=await cursor.toArray();
-      res.send
+      res.send(result)
+    })
+    app.get('/myArtlist/:email',async(req,res)=>{
+      console.log(req.params.email);
+      const result=await artscraftCollection.find({userEmail:req.params.email}).toArray();
+      res.send(result)
     })
 
     app.post('/addcraft',async(req,res)=>{
       const newCraft=req.body;
       console.log(newCraft);
       const result=await artscraftCollection.insertOne(newCraft);
+      res.send(result)
+    })
+
+    // user related api
+    app.post('/users',async(req,res)=>{
+      const user=req.body;
+      const result=await usersCollection.insertOne(user);
       res.send(result)
     })
     // Send a ping to confirm a successful connection
