@@ -67,7 +67,6 @@ async function run() {
           stockstatus:req.body.stockstatus,
           image:req.body.image
 
-
         }
       }
       const result=await artscraftCollection.updateOne(quary,data);
