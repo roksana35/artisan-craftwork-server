@@ -46,8 +46,13 @@ async function run() {
     app.get('/category',async(req,res)=>{
       const cursor=subcategoryCollection.find();
       const result = await cursor.toArray();
-      console.log(result);
+      // console.log(result);
       res.send(result)
+    })
+    app.get('/category/:id',async(req,res)=>{
+      console.log(req.params.id);
+      const result=await subcategoryCollection.findOne({_id:new ObjectId(req.params.id)})
+      res.send(result);
     })
 
 
