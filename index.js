@@ -34,13 +34,23 @@ async function run() {
      
     const artscraftCollection=client.db('artsaDB').collection('arts');
     const usersCollection=client.db('artsaDB').collection('users');
-
+    const subcategoryCollection=client.db('artsaDB').collection('category');
 
     app.get('/addcraft',async(req,res)=>{
       const cursor=artscraftCollection.find();
       const result=await cursor.toArray();
       res.send(result)
     })
+
+    // category api
+    app.get('/category',async(req,res)=>{
+      const cursor=subcategoryCollection.find();
+      const result = await cursor.toArray();
+      console.log(result);
+      res.send(result)
+    })
+
+
     app.get('/myArtlist/:email',async(req,res)=>{
       console.log(req.params.email);
       const result=await artscraftCollection.find({userEmail:req.params.email}).toArray();
@@ -85,6 +95,7 @@ async function run() {
       const result= await artscraftCollection.deleteOne({_id:new ObjectId(req.params.id)});
       console.log(result);
       res.send(result)
+      
     })
 
     // user related api
