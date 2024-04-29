@@ -1,7 +1,7 @@
 const express=require('express');
 const cors =require('cors');
 require('dotenv').config();
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 const app = express();
 const port=process.env.PORT ||5000;
@@ -47,10 +47,44 @@ async function run() {
       res.send(result)
     })
 
+    app.get('/update/:id',async(req,res)=>{
+      console.log(req.params.id)
+      const result= await artscraftCollection.findOne({_id:new ObjectId(req.params.id)})
+      console.log(result)
+      res.send(result)
+    })
+    app.put('/update/:id',async(req,res)=>{
+      console.log(req.params.id);
+      const quary={_id: new ObjectId(req.params.id)};
+      const data={
+        $set:{
+          itemname:req.body.itemname,
+          subname:req.body.subname,
+          cutomization:req.body.cutomization,
+          time:req.body.time,
+          price:req.body.price,
+          rating:req.body.rating,
+          stockstatus:req.body.stockstatus,
+          image:req.body.image
+
+
+        }
+      }
+      const result=await artscraftCollection.updateOne(quary,data);
+      console.log(result)
+      res.send(result)
+    })
+
     app.post('/addcraft',async(req,res)=>{
       const newCraft=req.body;
       console.log(newCraft);
       const result=await artscraftCollection.insertOne(newCraft);
+      res.send(result)
+    })
+
+    app.delete('/delete/:id',async(req,res)=>{
+      const result= await artscraftCollection.deleteOne({_id:new ObjectId(req.params.id)});
+      console.log(result);
       res.send(result)
     })
 
