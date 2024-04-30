@@ -50,26 +50,31 @@ async function run() {
       res.send(result)
     })
     app.get('/category/:id',async(req,res)=>{
-      console.log(req.params.id);
+      // console.log(req.params.id);
       const result=await subcategoryCollection.findOne({_id:new ObjectId(req.params.id)})
       res.send(result);
+    })
+    app.get('/category/:subcategoryname',async(req,res)=>{
+      console.log(req.params.subcategoryname)
+      const result=await subcategoryCollection.find({subcategoryname:req.params.subcategoryname}).toArray();
+      res.send(result)
     })
 
 
     app.get('/myArtlist/:email',async(req,res)=>{
-      console.log(req.params.email);
+      // console.log(req.params.email);
       const result=await artscraftCollection.find({userEmail:req.params.email}).toArray();
       res.send(result)
     })
 
     app.get('/update/:id',async(req,res)=>{
-      console.log(req.params.id)
+      // console.log(req.params.id)
       const result= await artscraftCollection.findOne({_id:new ObjectId(req.params.id)})
       console.log(result)
       res.send(result)
     })
     app.put('/update/:id',async(req,res)=>{
-      console.log(req.params.id);
+      // console.log(req.params.id);
       const quary={_id: new ObjectId(req.params.id)};
       const data={
         $set:{
