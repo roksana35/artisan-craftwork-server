@@ -54,11 +54,11 @@ async function run() {
       const result=await subcategoryCollection.findOne({_id:new ObjectId(req.params.id)})
       res.send(result);
     })
-    // app.get('/subcategory/:subcategoryname',async(req,res)=>{
-    //   console.log(req.params.subcategoryname)
-    //   const result=await subcategoryCollection.find({subcategoryname:req.params.subcategoryname}).toArray();
-    //   res.send(result)
-    // })
+    app.get('/subcategory/:subcategoryname',async(req,res)=>{
+      console.log(req.params.subcategoryname)
+      const result=await subcategoryCollection.find({subcategoryname:req.params.subcategoryname}).toArray();
+      res.send(result)
+    })
 
 
     app.get('/myArtlist/:email',async(req,res)=>{
